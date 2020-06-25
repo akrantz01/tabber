@@ -1,4 +1,12 @@
-document.getElementById("load").onclick = async () => {
+// Add compatibility between Chromium & Firefox
+let b;
+try {
+    b = browser;
+} catch (_) {
+    b = chrome;
+}
+
+document.getElementById("load").onclick = () => {
     // Attempt to decode array
     let decoded;
     try {
@@ -23,7 +31,7 @@ document.getElementById("load").onclick = async () => {
         }
 
         // Create the tab
-        await browser.tabs.create({
+        b.tabs.create({
             active: false,
             url: url
         })
@@ -32,19 +40,20 @@ document.getElementById("load").onclick = async () => {
     setStatus("Successfully loaded tabs", "green");
 };
 
-document.getElementById("export").onclick = async () => {
+document.getElementById("export").onclick = () => {
     // Get list of URLs from tabs
-    let tabs = await browser.tabs.query({currentWindow: true});
-    let urls = tabs.map(tab => tab.url);
+    b.tabs.query({currentWindow: true}, tabs => {
+        let urls = tabs.map(tab => tab.url);
 
-    // Create JSON blob and open in new window for saving
-    let blob = new Blob([JSON.stringify(urls)], {type: "application/json"});
-    await browser.tabs.create({
-        active: true,
-        url: URL.createObjectURL(blob)
+        // Create JSON blob and open in new window for saving
+        let blob = new Blob([JSON.stringify(urls)], {type: "application/json"});
+        b.tabs.create({
+            active: true,
+            url: URL.createObjectURL(blob)
+        });
+
+        setStatus("Successfully exported tabs", "green");
     });
-
-    setStatus("Successfully exported tabs", "green");
 }
 
 function setStatus(status, color) {
