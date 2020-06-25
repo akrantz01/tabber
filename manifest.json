@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Tabber",
+  "version": "1.0",
+  "description": "Save and load tabs to files",
+  "homepage_url": "https://github.com/akrantz01/tabber",
+  "permissions": [
+    "menus",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "48": "icon.svg",
+    "96": "icon.svg"
+  }
+}
