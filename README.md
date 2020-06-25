@@ -1,7 +1,8 @@
 # Tabber
 
 A simple browser extension to save and load a window's tabs to a file.
-Currently, it is only available for Firefox.
+This was really only made for my personal use, but I'm making it public for anyone else that finds it useful.
+There's also probably far better tab management extensions than this one.
 
 ## Contributing
 - If you experience an issue or need support, please create an issue.
