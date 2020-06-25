@@ -32,6 +32,21 @@ document.getElementById("load").onclick = async () => {
     setStatus("Successfully loaded tabs", "green");
 };
 
+document.getElementById("export").onclick = async () => {
+    // Get list of URLs from tabs
+    let tabs = await browser.tabs.query({currentWindow: true});
+    let urls = tabs.map(tab => tab.url);
+
+    // Create JSON blob and open in new window for saving
+    let blob = new Blob([JSON.stringify(urls)], {type: "application/json"});
+    await browser.tabs.create({
+        active: true,
+        url: URL.createObjectURL(blob)
+    });
+
+    setStatus("Successfully exported tabs", "green");
+}
+
 function setStatus(status, color) {
     let s = document.getElementById("status");
     s.innerText = status;
